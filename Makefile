@@ -1,5 +1,7 @@
 CFLAGS := -Os
 
+LIBDIR := $(realpath $(dir $(shell gcc -print-file-name=libc.so)))
+
 .PHONY: all clean
 
 all: hitchhiker hitchhiker-bare hitchhiker-dynamic
@@ -11,7 +13,7 @@ hitchhiker: main.o deepthought.o
 	${CC} ${CFLAGS} -o $@ $^
 
 hitchhiker-bare: main.o deepthought.o
-	ld -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o $@ /usr/lib64/crt1.o -L/usr/lib64 $^ -lc
+	ld -dynamic-linker "${LIBDIR}/ld-linux-x86-64.so.2" -o $@ "${LIBDIR}/crt1.o" "-L${LIBDIR}" $^ -lc
 
 hitchhiker-dynamic: main.o libdeepthought.so
 	${CC} ${CFLAGS} -o $@ $^
