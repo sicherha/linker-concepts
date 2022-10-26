@@ -1,0 +1,6 @@
+/hitchhiker
+/hitchhiker-bare
+/hitchhiker-dynamic
+/*.o
+/*.so
+/*.swp
